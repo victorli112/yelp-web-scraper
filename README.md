@@ -9,3 +9,5 @@ It is recommended to run the sript separately for each query and migrate the dat
 The script also requires the use of a ScraperAPIClient account to web-scrape without being blacklisted.
 
 The token should be inputted where TOKEN is written on line 100.
+
+** For the txt to xlsw script, document names and columns should be updated before each use. Be careful updating columns and check before changing it or data may be overwritten.
