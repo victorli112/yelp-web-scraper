@@ -61,26 +61,7 @@ cities = [
     ['Wichita', 'KS'],
     ]
 
-businesses = ['nail+salon', 'tattoo+parlor', 'restaurant', 'spa', 'gym', 'hotel', 'plumbers', 'takeout', 'bar', 'lunch', 'motel', 'contractor', 'car+fixer', 'auto+repair', 'Aquariums', 'bowling', 'parks']
-headers = {
-            'referer' : 'https://www.google.com/',
-            'authority': 'www.yelp.com',
-            'method': 'GET',
-            'scheme': 'https',
-            'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-            'accept-encoding': 'gzip, deflate, br',
-            'accept-language': 'en-US,en;q=0.9',
-            'cache-Control': 'max-age=0',
-            'dnt' : '1',
-            'sec-ch-ua-mobile': '?0',
-            'sec-fetch-dest': 'document',
-            'sec-fetch-mode': 'navigate',
-            'sec-fetch-site': 'none',
-            'sec-fetch-user': '?1',
-            'upgrade-insecure-requests': '1',
-            'user-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36'
-}
-
+failed = 0
 def vaccine_req():
     exec_reqs('&attrs=proof_of_vaccination_required')
 
@@ -97,11 +78,12 @@ def req_city(city, state, num, stri):
         URL = 'https://www.yelp.com/search?find_desc=Restaurants&find_loc=' + city + '%2C%20' + state + stri + '&start=' + str(num)
 
         try:
-            client = ScraperAPIClient('TOKEN')
+            client = ScraperAPIClient('99d015743aed73edeebda7421bb2af17')
             page = client.get(URL)
 
         except Exception:
-            print('URL request failed, please rerun this city.')
+            print('URL request failed.')
+            failed = failed + 1
 
         soup = BeautifulSoup(page.text, 'html.parser')
         find_res(soup)
@@ -121,5 +103,6 @@ def find_res(soup):
       if "/biz/" in i.get('href'):
         print(i.get('href')[5:])
 
-vaccine_req()
 staff_vaccinated()
+vaccine_req()
+print(failed)
